@@ -1,4 +1,4 @@
-// File: battery-graphic-card.js
+
 import { LitElement, html, css } from 'https://unpkg.com/lit-element?module';
 
 class BatteryGraphicCard extends LitElement {
