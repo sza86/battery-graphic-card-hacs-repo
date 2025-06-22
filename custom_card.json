@@ -1,6 +1,0 @@
-{
-  "type": "battery-graphic-card",
-  "name": "Battery Graphic Card",
-  "description": "Wizualna karta poziomu baterii z graficznym wskaźnikiem. Wymaga encji z wartością procentową.",
-  "preview": false
-}
