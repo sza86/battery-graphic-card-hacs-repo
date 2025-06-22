@@ -1,4 +1,4 @@
-
+// File: battery-graphic-card.js
 import { LitElement, html, css } from 'https://unpkg.com/lit-element?module';
 
 class BatteryGraphicCard extends LitElement {
@@ -66,8 +66,8 @@ class BatteryGraphicCard extends LitElement {
 
   render() {
     const stateObj = this.hass.states[this.config.entity];
-    if (!stateObj) {
-      return html`<ha-card>Battery sensor not found: ${this.config.entity}</ha-card>`;
+    if (!stateObj || isNaN(parseInt(stateObj.state, 10))) {
+      return html`<ha-card>⚠️ Niepoprawna lub brakująca encja: ${this.config.entity}</ha-card>`;
     }
 
     const level = parseInt(stateObj.state, 10);
@@ -104,11 +104,12 @@ class BatteryGraphicCard extends LitElement {
   }
 
   static getConfigElement() {
-    return document.createElement("hui-entity-card-editor");
+    const el = document.createElement("hui-entity-card-editor");
+    return el;
   }
 
   static getStubConfig(hass, entities) {
-    const battery = entities.find(e => e.includes("battery")) || "sensor.bateria";
+    const battery = entities.find(e => hass.states[e].attributes.device_class === "battery") || entities[0] || "sensor.battery";
     return { entity: battery };
   }
 }
@@ -119,5 +120,5 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "battery-graphic-card",
   name: "Battery Graphic Card",
-  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem."
+  description: "Wizualna karta poziomu baterii z graficznym wskaźnikiem. Wymaga dowolnej encji z wartością procentową."
 });
